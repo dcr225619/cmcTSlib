@@ -122,7 +122,7 @@ class Statssummaries:
 
 if __name__ == "__main__":
 
-    file_path = "000001.csv"
+    file_path = "000001.csv" # from https://github.com/onewaymyway/stockdata/blob/master/stockdatas/000001.csv
     #
     data = pd.read_csv(file_path)
 
