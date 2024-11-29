@@ -7,7 +7,6 @@ class Statssummaries:
         """
         Initializations
         :param data: DataFrame includes market data
-        :param datetime_column: the name of date column
         :param price_column: the name of price column
         """
         self.data = data.copy()
@@ -28,7 +27,7 @@ class Statssummaries:
         results = {}
         for metric in metrics:
             if metric == 'mean':
-                results['Rolling_Mean'] = self.data[self.price_column].rolling(window).mean()
+                results['Rolling_Mean'] = self.data[self.price_column].rolling(window).mean()  # moving average
             elif metric == 'median':
                 results['Rolling_Median'] = self.data[self.price_column].rolling(window).median()
             elif metric == 'std':
@@ -85,7 +84,7 @@ class Statssummaries:
         """
         return self.data[self.price_column].pct_change(periods=period) * 100 # Percentage change between neighboring data points
 
-    def simple_seasonal_decomposition(self, freq): # additive? else?
+    def simple_seasonal_decomposition(self, method = 'additive', freq = 12):
         """
         Perform simple seasonal decomposition
         :param freq: Frequency of the data for seasonal decomposition.
@@ -95,11 +94,20 @@ class Statssummaries:
         trend = self.data[self.price_column].rolling(window=freq, center=True).mean()
 
         # seasonal decomposition
-        detrended = self.data[self.price_column] - trend
+        if method == 'additive':
+            detrended = self.data[self.price_column] - trend
+        elif method == 'multiplicative':
+            detrended = self.data[self.price_column] / trend
+        else:
+            raise ValueError("Unsupported method. Use 'additive' or 'multiplicative'.")
+
         seasonal = detrended.groupby(self.data.index.to_period(f"{freq}D").strftime('%d')).transform('mean')
 
         # residual
-        residual = self.data[self.price_column] - trend - seasonal
+        if method == 'additive':
+            residual = self.data[self.price_column] - trend - seasonal
+        elif method == 'multiplicative':
+            residual = self.data[self.price_column] / (trend * seasonal)
 
         return {
             'trend': trend,
@@ -120,44 +128,3 @@ class Statssummaries:
         summary.fillna(0, inplace=True)  # 
 
         return summary
-
-
-if __name__ == "__main__":
-
-    file_path = "000001.csv"
-    
-    processor = DataProcessor(file_path=file_path, file_format="csv")
-    data = processor.load_data()  # 
-
-    print("Loaded Data (first 5 rows):")
-    print(data.head())
-
-    analysis_tools = Statssummaries(data, price_column="close")
-    
-    rolling_stats = analysis_tools.calculate_rolling_statistics(window=20, metrics=['mean', 'std'])
-    print("Rolling Statistic:")
-    print(rolling_stats)
-    
-    expanding_stats = analysis_tools.calculate_expanding_statistics(metrics=['mean'])
-    print("Expanding Statistic:")
-    print(expanding_stats)
-    
-    atr = analysis_tools.calculate_volatility(method='atr', window=14)
-    print("ATR:")
-    print(atr)
-    
-    roc = analysis_tools.calculate_rate_of_change(period=10)
-    print("ROC:(%)")
-    print(roc)
-    
-    decomposition = analysis_tools.simple_seasonal_decomposition(freq=12)
-    print("Trend:")
-    print(decomposition['trend'].head(24))
-    print("Seasonal:")
-    print(decomposition['seasonal'].head(24))
-    print("Residual:")
-    print(decomposition['residual'].head(24))
-
-    summary_table = analysis_tools.summary(rolling_window=20, roc_period=10, atr_window=14)
-    print("Summary:")
-    print(summary_table.head(24))
