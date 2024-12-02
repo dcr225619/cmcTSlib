@@ -13,10 +13,10 @@ The Data Processing Module manages financial time series data intake and prepara
 ### Function Description
 1. __init__(self, file_path: str, file_format: str = "csv")
    This function initializes the data processor with the file path and format.
-   '''
+   ```
    parameters: file_path - path to the data file
                file_format - format of the data file (default is 'csv')
-   '''
+   ```
 2. load_data(self)
    This function loads the data based on the file format.
    '''
