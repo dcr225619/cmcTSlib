@@ -18,6 +18,9 @@ This README file includes a brief introduction to the module and usage instructi
 >
 > Run run_test for unit testing
 
+### Dataset
+The dataset '000001.csv' for example usage is from https://github.com/onewaymyway/stockdata
+
 ## Data Processing module
 The Data Processing Module manages financial time series data intake and preparation. It includes the following functions:
 1. __init__(self, file_path: str, file_format: str = "csv")
