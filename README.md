@@ -1,5 +1,6 @@
 # cmcTSlib
 Time Series Analysis package cmcTSlib for DS5010 course project.
+
 This README file includes a brief introduction to the module and usage instructions.
 
 ## Data Processing module
