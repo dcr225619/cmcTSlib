@@ -12,19 +12,22 @@ The Data Processing Module manages financial time series data intake and prepara
 
 ### Function Description
 1. __init__(self, file_path: str, file_format: str = "csv")
+   
    This function initializes the data processor with the file path and format.
    ```
    parameters: file_path - path to the data file
                file_format - format of the data file (default is 'csv')
    ```
 2. load_data(self)
+
    This function loads the data based on the file format.
    ```
    returns: self.data - loaded dataset
    raises: ValueError if the file format is not supported
    ```
    
-4. resample_data(self, frequency: str = "D", agg_method: str = "mean")
+3. resample_data(self, frequency: str = "D", agg_method: str = "mean")
+
    This function resamples the time series data to a specified frequency.
    ```
    parameters: frequency - the desired frequency ('D' for daily, 'W' for weekly, 'M' for monthly) (using pd)
@@ -34,7 +37,8 @@ The Data Processing Module manages financial time series data intake and prepara
            ValueError if the input aggregation method is not supported
    ```
    
-5. detect_outliers(self, column: str, method: str = "zscore", threshold: float = 3.0)
+4. detect_outliers(self, column: str, method: str = "zscore", threshold: float = 3.0)
+   
    This function detects outliers in the data based on the specified method.
    ```
    parameters: column - the column to check for outliers
@@ -45,7 +49,8 @@ The Data Processing Module manages financial time series data intake and prepara
            ValueError if input column not found in data
    ```
    
-7. smooth_data(self, column: str, window_size: int = 5)
+5. smooth_data(self, column: str, window_size: int = 5)
+   
    This function smooths the data using a rolling average.
    ```
    parameters: column - the column to smooth
@@ -59,16 +64,17 @@ The Data Processing Module manages financial time series data intake and prepara
 
 ## Statistical Summaries module
 The Statistical Summaries Module provides users with essential metrics for analyzing trends, volatility, and other characteristics of stock market data. It includes the following functions:
-1.
-2.
-3.
-4.
-5.
-6.
-7.
+1. __init__(self, data, price_column='close')
+2. calculate_rolling_statistics(self, window=1, metrics=['mean', 'median', 'std'])
+3. calculate_expanding_statistics(self, window=1, metrics=['mean', 'std'])
+4. calculate_volatility(self, method='std', window=None)
+5. calculate_rate_of_change(self, period)
+6. simple_seasonal_decomposition(self, method = 'additive', freq = 12)
+7. summary(self, rolling_window=20, roc_period=10, atr_window=14)
 
 ### Function Description
 1. __init__(self, data, price_column='close')
+   
    This function initializes the dataset for summary.
    ```
    parameters: data - DataFrame includes market data
@@ -77,6 +83,7 @@ The Statistical Summaries Module provides users with essential metrics for analy
    ```
    
 2. calculate_rolling_statistics(self, window=1, metrics=['mean', 'median', 'std'])
+   
    This function calculates the rolling window statistics.
    ```
    parameters: window - Window size for rolling calculations.
@@ -86,6 +93,7 @@ The Statistical Summaries Module provides users with essential metrics for analy
    ```
    
 3. calculate_expanding_statistics(self, window=1, metrics=['mean', 'std'])
+   
    This function calculates expanding window statistics.
    ```
    parameters: metrics - List of metrics to calculate ('mean', 'std').
@@ -94,6 +102,7 @@ The Statistical Summaries Module provides users with essential metrics for analy
    ```
 
 4. calculate_volatility(self, method='std', window=None)
+   
    This function calculates volatility metrics.
    ```
    parameters: method - 'std' (standard deviation) or 'atr' (average true range).
@@ -104,12 +113,14 @@ The Statistical Summaries Module provides users with essential metrics for analy
    ```
 
 5. calculate_rate_of_change(self, period)
+
    This function calculates the rate of change (RoC) metric.
    ```
    parameters: period - Period for RoC calculation.
    returns: pd.Series with RoC values.
    ```
 6. simple_seasonal_decomposition(self, method = 'additive', freq = 12)
+    
    This function performs simple seasonal decomposition.
    ```
    parameters: freq - Frequency of the data for seasonal decomposition.
@@ -117,7 +128,8 @@ The Statistical Summaries Module provides users with essential metrics for analy
    raises: ValueError if the input method is not supported
    ```
 7. summary(self, rolling_window=20, roc_period=10, atr_window=14)
-   This function returns a summary of rolling window statistics, volatility and rate of change.
+    
+   This function returns a summary of rolling window statistics, volatility, and rate of change.
       
 ### Example Usage
 ```
