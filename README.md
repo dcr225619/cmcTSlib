@@ -62,6 +62,8 @@ The Data Processing Module manages financial time series data intake and prepara
 ### Example Usage
 
 
+
+
 ## Statistical Summaries module
 The Statistical Summaries Module provides users with essential metrics for analyzing trends, volatility, and other characteristics of stock market data. It includes the following functions:
 1. __init__(self, data, price_column='close')
@@ -185,3 +187,100 @@ print(summary_table.head(48))
 
 ## Visualization module
 The Visualization Module is designed to help users interpret stock market trends through clear, informative visualizations. It includes the following functions:
+1. __init__(self, data, analysis_tools)
+2. plot_price_with_moving_averages(self, window_short=50, window_long=200)
+3. plot_volatility(self, atr_window=14, analysis_tools=None)
+4. plot_rate_of_change(self, period=10, analysis_tools=None)
+5. plot_seasonal_decomposition(self, freq=12, analysis_tools=None)
+
+### Function Description
+1. __init__(self, data, analysis_tools)
+
+   This function initializes the dataset and the analysis tools.
+
+2. plot_price_with_moving_averages(self, window_short=50, window_long=200)
+
+   This function plots closing prices with short-term and long-term moving averages.
+   ```
+   parameters: window_short - Window size for short-term moving average. Defaults to 50
+               window_long - Window size for long-term moving average. Defaults to 200
+   returns: A plot of closing prices with moving averages.
+   ```
+
+3. plot_volatility(self, atr_window=14, analysis_tools=None)
+
+   This function plots the 0ATR for volatility.
+   ```
+   parameters: atr_window - Window size for ATR calculation. Defaults to 14
+               analysis_tools - Statssummaries object. Defaults to None
+   return: plot
+   ```
+4. plot_rate_of_change(self, period=10, analysis_tools=None)
+
+   This function plots the RoC for a specified period.
+   ```
+   parameters: period - Number of periods for calculating the RoC. Defaults to 10
+               analysis_tools - Statssummaries object. Defaults to None
+   returns: plot
+   ```
+5. plot_seasonal_decomposition(self, freq=12, analysis_tools=None)
+
+   This function plots the trend, seasonal, and residual components.
+   ```
+   parameters: freq - Frequency for seasonal decomposition. Defaults to 12.
+               analysis_tools - Statssummaries object. Defaults to None.
+   returns: plots
+   ```
+   
+### Example Usage
+
+```
+import unittest
+from unittest.mock import patch
+from Visualization import VisualizationModule
+from statssummaries import Statssummaries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+class TestVisualizationModule(unittest.TestCase):
+    def setUp(self):
+        '''
+         @purpose: To set up sample dataset (date and close) for the tests and initialzes the mock analysis tools.
+        '''
+        self.data = pd.DataFrame({
+            'date': pd.date_range(start='2023-01-01', periods=100, freq='D'),
+            'close': np.random.randn(100) + 100
+        })
+        self.mock_analysis_tools = MockAnalysisTools(self.data)
+        self.visualization_module = VisualizationModule(self.data, self.mock_analysis_tools)
+    
+    def test_plot_price_with_moving_averages(self):
+        '''
+        @purpose: Verifies that the plot function `plot_price_with_moving_averages` calls plt.show() once with the given window parameters.
+        '''
+        with patch('matplotlib.pyplot.show') as mock_show:
+            self.visualization_module.plot_price_with_moving_averages(window_short=20, window_long=50)
+        
+        mock_show.assert_called_once()  
+    
+    def test_plot_volatility(self):
+        '''Tests the plotting volatility function.'''
+        with patch('matplotlib.pyplot.show') as mock_show:
+            self.visualization_module.plot_volatility(atr_window=14)
+        mock_show.assert_called_once()  
+
+
+class MockAnalysisTools:
+    '''Imitates the methods calculate_rolling_statistics and calculate_volatility for testing the visualization module and returns mock data iin the functions'''
+    def __init__(self, data):
+        self.data = data
+    
+    def calculate_rolling_statistics(self, window, metrics):
+        
+        return {'Rolling_Mean': [1, 2, 3]}
+    
+    def calculate_volatility(self, method, window):
+        
+        return [0.1, 0.2, 0.3]
+```
