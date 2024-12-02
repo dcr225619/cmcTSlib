@@ -6,13 +6,14 @@ This README file includes a brief introduction to the module and usage instructi
 ## Getting Started
 
 ### Dependencies
-> Python3
+> Python3:
 > * Numpy
 > * Pandas
 > * Matplotlib
   
 ### Running the code
 > Clone the repo to your local machine
+>
 > Run each algorithm individually
 
 ## Data Processing module
