@@ -3,6 +3,18 @@ Time Series Analysis package cmcTSlib for DS5010 course project.
 
 This README file includes a brief introduction to the module and usage instructions.
 
+## Getting Started
+
+### Dependencies
+> Python3
+> * Numpy
+> * Pandas
+> * Matplotlib
+  
+### Running the code
+> Clone the repo to your local machine
+> Run each algorithm individually
+
 ## Data Processing module
 The Data Processing Module manages financial time series data intake and preparation. It includes the following functions:
 1. __init__(self, file_path: str, file_format: str = "csv")
