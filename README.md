@@ -14,7 +14,9 @@ This README file includes a brief introduction to the module and usage instructi
 ### Running the code
 > Clone the repo to your local machine
 >
-> Run each algorithm individually
+> Run each module (data processing, statistical summaries, visualization) individually
+>
+> Run run_test for unit testing
 
 ## Data Processing module
 The Data Processing Module manages financial time series data intake and preparation. It includes the following functions:
