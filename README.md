@@ -23,14 +23,14 @@ The dataset '000001.csv' for example usage can be downloaded from https://github
 
 ## Data Processing module
 The Data Processing Module manages financial time series data intake and preparation. It includes the following functions:
-1. __init__(self, file_path: str, file_format: str = "csv")
+1. __init__(self, file_path, file_format)
 2. load_data(self)
-3. resample_data(self, frequency: str = "D", agg_method: str = "mean")
-4. detect_outliers(self, column: str, method: str = "zscore", threshold: float = 3.0)
-5. smooth_data(self, column: str, window_size: int = 5)
+3. resample_data(self, frequency, agg_method)
+4. detect_outliers(self, column, method, threshold)
+5. smooth_data(self, column, window_size)
 
 ### Function Description
-1. __init__(self, file_path: str, file_format: str = "csv")
+1. __init__(self, file_path: str, file_format)
    
    This function initializes the data processor with the file path and format.
    ```
@@ -45,7 +45,7 @@ The Data Processing Module manages financial time series data intake and prepara
    raises: ValueError if the file format is not supported
    ```
    
-3. resample_data(self, frequency: str = "D", agg_method: str = "mean")
+3. resample_data(self, frequency, agg_method)
 
    This function resamples the time series data to a specified frequency.
    ```
@@ -56,7 +56,7 @@ The Data Processing Module manages financial time series data intake and prepara
            ValueError if the input aggregation method is not supported
    ```
    
-4. detect_outliers(self, column: str, method: str = "zscore", threshold: float = 3.0)
+4. detect_outliers(self, column, method, threshold)
    
    This function detects outliers in the data based on the specified method.
    ```
@@ -68,7 +68,7 @@ The Data Processing Module manages financial time series data intake and prepara
            ValueError if input column not found in data
    ```
    
-5. smooth_data(self, column: str, window_size: int = 5)
+5. smooth_data(self, column, window_size)
    
    This function smooths the data using a rolling average.
    ```
@@ -181,16 +181,16 @@ if __name__ == "__main__":
 
 ## Statistical Summaries module
 The Statistical Summaries Module provides users with essential metrics for analyzing trends, volatility, and other characteristics of stock market data. It includes the following functions:
-1. __init__(self, data, price_column='close')
-2. calculate_rolling_statistics(self, window=1, metrics=['mean', 'median', 'std'])
-3. calculate_expanding_statistics(self, window=1, metrics=['mean', 'std'])
-4. calculate_volatility(self, method='std', window=None)
+1. __init__(self, data, price_column)
+2. calculate_rolling_statistics(self, window, metrics)
+3. calculate_expanding_statistics(self, window, metrics)
+4. calculate_volatility(self, method, window)
 5. calculate_rate_of_change(self, period)
-6. simple_seasonal_decomposition(self, method = 'additive', freq = 12)
-7. summary(self, rolling_window=20, roc_period=10, atr_window=14)
+6. simple_seasonal_decomposition(self, method, freq)
+7. summary(self, rolling_window, roc_period, atr_window)
 
 ### Function Description
-1. __init__(self, data, price_column='close')
+1. __init__(self, data, price_column)
    
    This function initializes the dataset for summary.
    ```
@@ -199,7 +199,7 @@ The Statistical Summaries Module provides users with essential metrics for analy
    raises: ValueError if the data index is not set to be a DatetimeIndex
    ```
    
-2. calculate_rolling_statistics(self, window=1, metrics=['mean', 'median', 'std'])
+2. calculate_rolling_statistics(self, window, metrics)
    
    This function calculates the rolling window statistics.
    ```
@@ -209,7 +209,7 @@ The Statistical Summaries Module provides users with essential metrics for analy
    raises: ValueError if the input metrics are not supported
    ```
    
-3. calculate_expanding_statistics(self, window=1, metrics=['mean', 'std'])
+3. calculate_expanding_statistics(self, window, metrics)
    
    This function calculates expanding window statistics.
    ```
@@ -218,7 +218,7 @@ The Statistical Summaries Module provides users with essential metrics for analy
    raises: ValueError if the input metrics are not supported
    ```
 
-4. calculate_volatility(self, method='std', window=None)
+4. calculate_volatility(self, method, window)
    
    This function calculates volatility metrics.
    ```
@@ -236,7 +236,7 @@ The Statistical Summaries Module provides users with essential metrics for analy
    parameters: period - Period for RoC calculation.
    returns: pd.Series with RoC values.
    ```
-6. simple_seasonal_decomposition(self, method = 'additive', freq = 12)
+6. simple_seasonal_decomposition(self, method, freq)
     
    This function performs simple seasonal decomposition.
    ```
@@ -244,7 +244,7 @@ The Statistical Summaries Module provides users with essential metrics for analy
    returns: Seasonal decomposition result.
    raises: ValueError if the input method is not supported
    ```
-7. summary(self, rolling_window=20, roc_period=10, atr_window=14)
+7. summary(self, rolling_window, roc_period, atr_window)
     
    This function returns a summary of rolling window statistics, volatility, and rate of change.
       
@@ -303,17 +303,17 @@ print(summary_table.head(48))
 ## Visualization module
 The Visualization Module is designed to help users interpret stock market trends through clear, informative visualizations. It includes the following functions:
 1. __init__(self, data, analysis_tools)
-2. plot_price_with_moving_averages(self, window_short=50, window_long=200)
-3. plot_volatility(self, atr_window=14, analysis_tools=None)
-4. plot_rate_of_change(self, period=10, analysis_tools=None)
-5. plot_seasonal_decomposition(self, freq=12, analysis_tools=None)
+2. plot_price_with_moving_averages(self, window_short, window_long)
+3. plot_volatility(self, atr_window, analysis_tools)
+4. plot_rate_of_change(self, period, analysis_tool)
+5. plot_seasonal_decomposition(self, freq, analysis_tools)
 
 ### Function Description
 1. __init__(self, data, analysis_tools)
 
    This function initializes the dataset and the analysis tools.
 
-2. plot_price_with_moving_averages(self, window_short=50, window_long=200)
+2. plot_price_with_moving_averages(self, window_short, window_long)
 
    This function plots closing prices with short-term and long-term moving averages.
    ```
@@ -322,7 +322,7 @@ The Visualization Module is designed to help users interpret stock market trends
    returns: A plot of closing prices with moving averages.
    ```
 
-3. plot_volatility(self, atr_window=14, analysis_tools=None)
+3. plot_volatility(self, atr_window, analysis_tools)
 
    This function plots the 0ATR for volatility.
    ```
@@ -330,7 +330,7 @@ The Visualization Module is designed to help users interpret stock market trends
                analysis_tools - Statssummaries object. Defaults to None
    return: plot
    ```
-4. plot_rate_of_change(self, period=10, analysis_tools=None)
+4. plot_rate_of_change(self, period, analysis_tools)
 
    This function plots the RoC for a specified period.
    ```
@@ -338,7 +338,7 @@ The Visualization Module is designed to help users interpret stock market trends
                analysis_tools - Statssummaries object. Defaults to None
    returns: plot
    ```
-5. plot_seasonal_decomposition(self, freq=12, analysis_tools=None)
+5. plot_seasonal_decomposition(self, freq, analysis_tools)
 
    This function plots the trend, seasonal, and residual components.
    ```
