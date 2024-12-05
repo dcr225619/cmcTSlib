@@ -240,7 +240,8 @@ The Statistical Summaries Module provides users with essential metrics for analy
     
    This function performs simple seasonal decomposition.
    ```
-   parameters: freq - Frequency of the data for seasonal decomposition.
+   parameters: method - 'additive' or 'multiplicative'
+               freq - Frequency of the data for seasonal decomposition.
    returns: Seasonal decomposition result.
    raises: ValueError if the input method is not supported
    ```
