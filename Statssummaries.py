@@ -87,6 +87,7 @@ class Statssummaries:
     def simple_seasonal_decomposition(self, method = 'additive', freq = 12):
         """
         Perform simple seasonal decomposition
+        :param method: residual can be computed by 'additive' or 'multiplicative'
         :param freq: Frequency of the data for seasonal decomposition.
         :return: Seasonal decomposition result.
         """
@@ -116,6 +117,9 @@ class Statssummaries:
         }
 
     def summary(self, rolling_window=20, roc_period=10, atr_window=14):
+        """
+        Return a summary of rolling window statistics, volatility and rate of change.
+        """
         summary = self.data.copy()
         
         rolling_stats = self.calculate_rolling_statistics(rolling_window, metrics=['mean', 'std'])
